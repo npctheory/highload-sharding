@@ -33,6 +33,20 @@ CREATE TABLE IF NOT EXISTS posts (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
+\c highloadsocial;
+
+CREATE TABLE IF NOT EXISTS dialog_messages (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    sender_id VARCHAR(255) NOT NULL,
+    receiver_id VARCHAR(255) NOT NULL,
+    text TEXT NOT NULL,
+    is_read BOOLEAN DEFAULT FALSE,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (sender_id) REFERENCES users(id),
+    FOREIGN KEY (receiver_id) REFERENCES users(id)
+);
+
+
 \c postgres;
 
 CREATE TABLE IF NOT EXISTS seed_status (
