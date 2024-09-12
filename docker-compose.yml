@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   pg_master:
     build:
@@ -21,23 +19,106 @@ services:
       interval: 30s
       timeout: 10s
       retries: 99999
+      start_period: 30s
+    depends_on:
+      pg_worker1:
+        condition: service_healthy
+      pg_worker2:
+        condition: service_healthy    
+      pg_worker3:
+        condition: service_healthy    
+    networks:
+      - highload_net
+ 
+  pg_worker1:
+    build:
+      context: ./citus-worker
+      dockerfile: Dockerfile
+    image: citus-worker:local
+    container_name: pg_worker1
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "35433:5432"
+    volumes:
+      - pg_worker1:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "bash", "/docker-healthcheck/check_postgres_seed.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 99999
       start_period: 0s
     networks:
       - highload_net
 
-  # pgadmin:
-  #   image: dpage/pgadmin4:latest
-  #   container_name: pgadmin
-  #   restart: unless-stopped
-  #   environment:
-  #     PGADMIN_DEFAULT_EMAIL: admin@admin.com
-  #     PGADMIN_DEFAULT_PASSWORD: admin
-  #   ports:
-  #     - "5050:80"
-  #   volumes:
-  #     - pgadmin_data:/var/lib/pgadmin
-  #   networks:
-  #     - highload_net
+  pg_worker2:
+    build:
+      context: ./citus-worker
+      dockerfile: Dockerfile
+    image: citus-worker:local
+    container_name: pg_worker2
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "35434:5432"
+    volumes:
+      - pg_worker2:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "bash", "/docker-healthcheck/check_postgres_seed.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 99999
+      start_period: 0s
+    depends_on:
+      - pg_worker1
+    networks:
+      - highload_net
+
+  pg_worker3:
+    build:
+      context: ./citus-worker
+      dockerfile: Dockerfile
+    image: citus-worker:local
+    container_name: pg_worker3
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "35435:5432"
+    volumes:
+      - pg_worker3:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "bash", "/docker-healthcheck/check_postgres_seed.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 99999
+      start_period: 30s
+    depends_on:
+      - pg_worker1
+    networks:
+      - highload_net
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - highload_net
 
   redis:
     image: redis:latest
@@ -95,6 +176,9 @@ services:
 
 volumes:
   pg_master:
+  pg_worker1:
+  pg_worker2:
+  pg_worker3:
   pgadmin_data:
 
 networks:
