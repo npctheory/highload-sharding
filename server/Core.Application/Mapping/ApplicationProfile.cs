@@ -5,6 +5,8 @@ using AutoMapper;
 using Core.Domain.Entities;
 using Core.Application.Friends.DTO;
 using Core.Application.Posts.DTO;
+using Core.Domain.Aggregates;
+using Core.Application.Dialogs.DTO;
 
 namespace Core.Application.Mapping
 {
@@ -15,6 +17,8 @@ namespace Core.Application.Mapping
             CreateMap<User, UserDTO>();
             CreateMap<Friendship, FriendDTO>();
             CreateMap<Post, PostDTO>();
+            CreateMap<Dialog, AgentDTO>();
+            CreateMap<DialogMessage, DialogMessageDTO>();
         }
     }
 }

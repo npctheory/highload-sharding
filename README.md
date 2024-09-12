@@ -14,7 +14,7 @@ WHERE
 SELECT isolate_tenant_to_new_shard('dialog_messages_sent', 'LadyGaga', 'CASCADE');
 SELECT isolate_tenant_to_new_shard('dialog_messages_received', 'LadyGaga', 'CASCADE');
 
---,
+--
 
 --Добавить третьего воркера
 SELECT master_add_node('pg_worker3', 5432);
@@ -49,7 +49,7 @@ SELECT
     (CASE WHEN shardid IN (,) THEN 0 ELSE 1 END)::real
 $$ LANGUAGE sql;
 
--- Add custom strategy
+-- Добавить созданные функции в таблицу стратегий
 INSERT INTO pg_dist_rebalance_strategy (
     name,
     default_strategy,
@@ -62,10 +62,11 @@ INSERT INTO pg_dist_rebalance_strategy (
 ) VALUES (
     'isolate_LadyGaga',false,'no_cost_for_LadyGaga','no_capacity_for_pg_worker3','isolate_LadyGaga_on_pg_worker3',0,0,0);
 
+--Сделать новую стратегию стратегией по умолчанию
 SELECT citus_set_default_rebalance_strategy('isolate_LadyGaga');
 
 
---Проверить новую стратегию ребаланса
+--Проверить что новая стратегия добавлена в таблицу и используется
 SELECT * FROM pg_dist_rebalance_strategy;
 
 --Ребаланс

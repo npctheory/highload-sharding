@@ -1,0 +1,31 @@
+@host=localhost:80
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJGaXNoS2VlcDE1NzYiLCJnaXZlbl9uYW1lIjoiU2hlcnJ5IiwiZmFtaWx5X25hbWUiOiJXcmlnaHQiLCJqdGkiOiI4N2M2Yjc4YS03YWRiLTRiMGUtYTBiNi03NzUzNDliZjA3MmYiLCJleHAiOjIwNDE1MzQzMzAsImlzcyI6IkhpZ2hsb2FkU29jaWFsIiwiYXVkIjoiSGlnaGxvYWRTb2NpYWwifQ.5fWKYY_sEXLSTsv0sygDyM8KsLKelQzfVgo9qn476i0
+
+### Login
+POST http://{{host}}/login
+Content-Type: application/json
+
+{
+  "id": "FishKeep1576",
+  "password": "password"
+}
+
+### ListDialogs
+GET http://{{host}}/dialog/list
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### ListMessages
+GET http://{{host}}/dialog/MaintainBring8253/list
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+### SendMessage
+POST http://{{host}}/dialog/MaintainBring8253/send
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "text": "Sup"
+}

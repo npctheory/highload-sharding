@@ -66,6 +66,13 @@ namespace Core.Infrastructure
                 return new PostRepository(connectionString, mapper);
             });
 
+            services.AddScoped<IDialogRepository>(sp =>
+            {
+                var connectionString = configuration.GetSection("DatabaseSettings:ConnectionString").Value;
+                var mapper = sp.GetRequiredService<IMapper>();
+                return new CitusDialogMessageRepository(connectionString, mapper);
+            });
+
             return services;
         }
     }
