@@ -7,7 +7,7 @@
 * В папке tests находятся запросы для расширения VSCode REST Client и экспорты коллекций и окружений Postman.
 ### Начало работы
 Склонировать проект, сделать cd в корень репозитория и запустить Docker Compose.  
-Дождаться статуса healthy на контейнерах postres - контейнеры станет healthy когда будет загружен сид(может занять некоторое время).  
+Дождаться статуса healthy на контейнерах pg_master, pg_worker1, pg_worker2, pg_worker3 - контейнеры станет healthy когда будет загружен сид(может занять некоторое время).  
 ```bash
 https://github.com/npctheory/highload-queries.git
 cd highload-queries
