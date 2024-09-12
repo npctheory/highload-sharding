@@ -1,3 +1,5 @@
+
+```sql
 --Проверить на каких шардах находятся записи от и для пользователя LadyGaga
 SELECT s.shardid, s.logicalrelid, u.id
 FROM pg_dist_shard s
@@ -73,3 +75,4 @@ SELECT citus_rebalance_start();
 SELECT shardid, nodename
 FROM pg_dist_shard_placement
 ORDER BY nodename DESC;
+```
