@@ -1,11 +1,11 @@
-## О проекте
+### О проекте
 Домашнее задание по шардированию.  
 Проект состоит из следующих компонентов:  
 * Приложение .NET WebApi в папке ./server, которое собирается в образ server:local и контейнер server.  
-* Dockerfile и сид базы данных координатора Postgres/Citus в папке ./db, которые собираются в образ db:local (контейнер pg_master). Библиотекой Faker сгенерированы пользователи, френды, посты.
+* Dockerfile и сид базы данных citus-координатора в папке ./db, который собирается в образ db:local (контейнер pg_master). Библиотекой Faker сгенерированы пользователи, френды, посты.
 * Dockerfile для воркеров Postgres/Citus в папке ./citus-worker, который собирается в образ citus-worker:local (контейнеры pg_worker1,pg_worker2,pg_worker3).
 * В папке tests находятся запросы для расширения VSCode REST Client и экспорты коллекций и окружений Postman.
-## Начало работы
+### Начало работы
 Склонировать проект, сделать cd в корень репозитория и запустить Docker Compose.  
 Дождаться статуса healthy на контейнерах postres - контейнеры станет healthy когда будет загружен сид(может занять некоторое время).  
 ```bash
@@ -13,15 +13,15 @@ https://github.com/npctheory/highload-queries.git
 cd highload-queries
 docker compose up --build -d
 ```
-## Контроллер диалогов
+### Контроллер диалогов
 Получение списка диалогов, получение сообщений диалога, отправка сообщений пользователю.  
 
 
 
-## Шардинг  
+### Хранилище диалогов  
 Хранилище диалогов реализуется классом CitusDialogMessageRepository.  
 Для задач решардинга хранилище сообщений денормализовано - при отправке сообщения пишутся в две таблицы: dialog_messages_sent и dialog_messages_received. При чтении полученные сообщения запрашиваются из dialog_messages_sent а отправленные из dialog_messages_received.  
-Таблица dialog_messages_sent сегментирована в Citus по ключу sender_id, Таблица dialog_messages_received сегментирована по ключу receiver_id.  
+Таблица dialog_messages_sent сегментирована по ключу sender_id, Таблица dialog_messages_received сегментирована по ключу receiver_id.  
 При первоначальном запуске приложения сид пользовательских сообщений сегментируется и распределяется по двум узлам pg_worker1 и pg_worker2.  
 Начальное состояние кластера Citus (файл ./db/initdb/init201.sql):  
 ```sql  
