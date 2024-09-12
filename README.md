@@ -3,7 +3,7 @@
 Проект состоит из следующих компонентов:  
 * Приложение .NET WebApi в папке ./server, которое собирается в образ server:local и контейнер server.  
 * Dockerfile и сид базы данных координатора Postgres/Citus в папке ./db, которые собираются в образ db:local (контейнер pg_master). Библиотекой Faker сгенерированы пользователи, френды, посты.
-* Dockerfile для воркеров Postgres/Citus в папке ./citus-worker, которые собираются в образ citus-worker:local (контейнеры pg_worker1,pg_worker2,pg_worker3).
+* Dockerfile для воркеров Postgres/Citus в папке ./citus-worker, который собирается в образ citus-worker:local (контейнеры pg_worker1,pg_worker2,pg_worker3).
 * В папке tests находятся запросы для расширения VSCode REST Client и экспорты коллекций и окружений Postman.
 ## Начало работы
 Склонировать проект, сделать cd в корень репозитория и запустить Docker Compose.  
