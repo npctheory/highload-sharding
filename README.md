@@ -37,7 +37,7 @@ SELECT create_distributed_table('dialog_messages_received', 'receiver_id');
 ### Решардинг  
 Пример решардинга. На видео к кластеру добавлеяется узел pg_worker3, создается кастомная стратегия ребаланса, в которой шардам с сообщениями от и для vip-пользователя LadyGaga выделяется отдельный воркер.
 
-<details><summary>Решардинг</summary>--Проверить на каких шардах находятся записи от и для пользователя LadyGaga
+<details><summary>Код SQL-запросов</summary>--Проверить на каких шардах находятся записи от и для пользователя LadyGaga
 SELECT s.shardid, s.logicalrelid, u.id
 FROM pg_dist_shard s
 JOIN users u ON
