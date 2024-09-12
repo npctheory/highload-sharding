@@ -10,7 +10,7 @@
 Дождаться статуса healthy на контейнерах pg_master, pg_worker1, pg_worker2, pg_worker3 - контейнеры станет healthy когда будет загружен сид(может занять некоторое время).  
 ```bash
 https://github.com/npctheory/highload-queries.git
-cd highload-queries
+cd highload-sharding
 docker compose up --build -d
 ```
 ### Контроллер диалогов
