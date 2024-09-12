@@ -16,6 +16,7 @@ docker compose up --build -d
 ### Контроллер диалогов
 Получение списка диалогов, получение сообщений диалога, отправка сообщений пользователю.  
 
+[Контроллер диалогов.webm](https://github.com/user-attachments/assets/42c0d007-fefa-4261-a04e-83b6593debe3)
 
 
 ### Хранилище диалогов  
@@ -113,3 +114,5 @@ SELECT citus_rebalance_start();
 SELECT shardid, nodename
 FROM pg_dist_shard_placement
 ORDER BY nodename DESC;</details>
+
+[Решардинг.webm](https://github.com/user-attachments/assets/a4296038-0911-4b0a-8b76-3d2356d23f36)
