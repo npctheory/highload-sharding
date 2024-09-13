@@ -38,7 +38,10 @@ SELECT create_distributed_table('dialog_messages_received', 'receiver_id');
 ### Решардинг  
 Пример решардинга. На видео к кластеру добавляется узел pg_worker3, создается кастомная стратегия ребаланса, в которой шардам с сообщениями от и для vip-пользователя LadyGaga выделяется отдельный воркер.
 
-<details><summary>Код SQL-запросов</summary>--Проверить на каких шардах находятся записи от и для пользователя LadyGaga
+[Решардинг.webm](https://github.com/user-attachments/assets/a4296038-0911-4b0a-8b76-3d2356d23f36)
+
+```sql
+--Проверить на каких шардах находятся записи от и для пользователя LadyGaga
 SELECT s.shardid, s.logicalrelid, u.id
 FROM pg_dist_shard s
 JOIN users u ON
@@ -113,6 +116,5 @@ SELECT citus_rebalance_start();
 --Еще раз проверить какие шарды на каких воркерах
 SELECT shardid, nodename
 FROM pg_dist_shard_placement
-ORDER BY nodename DESC;</details>
-
-[Решардинг.webm](https://github.com/user-attachments/assets/a4296038-0911-4b0a-8b76-3d2356d23f36)
+ORDER BY nodename DESC;
+```
